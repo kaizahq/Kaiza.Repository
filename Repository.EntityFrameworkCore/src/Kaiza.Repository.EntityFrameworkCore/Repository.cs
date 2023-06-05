@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Kaiza.Repository.EntityFrameworkCore;
 
-public abstract class Repository<T> : IRepository<T> where T : class
+public abstract class Repository<T, TId> : IRepository<T, TId> where T : class
 {
     protected readonly DbContext _context;
     protected readonly DbSet<T> _dbSet;
@@ -22,60 +22,60 @@ public abstract class Repository<T> : IRepository<T> where T : class
         _specificationEvaluator = specificationEvaluator;
     }
 
-    public async Task<T?> GetById<TId>(TId id, CancellationToken cancellationToken = default) where TId : notnull
+    public virtual async Task<T?> GetById(TId id, CancellationToken ct = default)
     {
-        return await _dbSet.FindAsync(new object?[] { id }, cancellationToken: cancellationToken);
+        return await _dbSet.FindAsync(new object?[] { id }, cancellationToken: ct);
     }
 
-    public async Task<T?> FirstOrDefault(ISpecification<T> specification, CancellationToken cancellationToken = default)
+    public virtual async Task<T?> FirstOrDefault(ISpecification<T> specification, CancellationToken ct = default)
     {
-        return await ApplySpecification(specification).FirstOrDefaultAsync(cancellationToken);
+        return await ApplySpecification(specification).FirstOrDefaultAsync(ct);
     }
 
-    public async Task<T?> SingleOrDefault(ISpecification<T> specification, CancellationToken cancellationToken = default)
+    public virtual async Task<T?> SingleOrDefault(ISpecification<T> specification, CancellationToken ct = default)
     {
-        return await ApplySpecification(specification).SingleOrDefaultAsync(cancellationToken);
+        return await ApplySpecification(specification).SingleOrDefaultAsync(ct);
     }
 
-    public async Task<List<T>> List(ISpecification<T> specification, CancellationToken cancellationToken = default)
+    public virtual async Task<List<T>> List(ISpecification<T> specification, CancellationToken ct = default)
     {
-        return await ApplySpecification(specification).ToListAsync(cancellationToken);
+        return await ApplySpecification(specification).ToListAsync(ct);
     }
 
-    public async Task<int> Count(ISpecification<T> specification, CancellationToken cancellationToken = default)
+    public virtual async Task<int> Count(ISpecification<T> specification, CancellationToken ct = default)
     {
-        return await ApplySpecification(specification, true).CountAsync(cancellationToken);
+        return await ApplySpecification(specification, true).CountAsync(ct);
     }
 
-    public async Task<bool> Any(ISpecification<T> specification, CancellationToken cancellationToken = default)
+    public virtual async Task<bool> Any(ISpecification<T> specification, CancellationToken ct = default)
     {
-        return await ApplySpecification(specification, true).AnyAsync(cancellationToken);
+        return await ApplySpecification(specification, true).AnyAsync(ct);
     }
 
-    public async Task Add(T entity, bool saveChanges = false, CancellationToken cancellationToken = default)
+    public virtual async Task Add(T entity, bool saveChanges = false, CancellationToken ct = default)
     {
         _dbSet.Add(entity);
 
-        if (saveChanges) await _context.SaveChangesAsync(cancellationToken);
+        if (saveChanges) await _context.SaveChangesAsync(ct);
     }
 
-    public async Task Update(T entity, bool saveChanges = false, CancellationToken cancellationToken = default)
+    public virtual async Task Update(T entity, bool saveChanges = false, CancellationToken ct = default)
     {
         _dbSet.Update(entity);
 
-        if (saveChanges) await _context.SaveChangesAsync(cancellationToken);
+        if (saveChanges) await _context.SaveChangesAsync(ct);
     }
 
-    public async Task Delete(T entity, bool saveChanges = false, CancellationToken cancellationToken = default)
+    public virtual async Task Delete(T entity, bool saveChanges = false, CancellationToken ct = default)
     {
         _dbSet.Remove(entity);
 
-        if (saveChanges) await _context.SaveChangesAsync(cancellationToken);
+        if (saveChanges) await _context.SaveChangesAsync(ct);
     }
 
-    public async Task<int> SaveChanges(CancellationToken cancellationToken = default)
+    public virtual async Task<int> SaveChanges(CancellationToken ct = default)
     {
-        return await _context.SaveChangesAsync(cancellationToken);
+        return await _context.SaveChangesAsync(ct);
     }
 
     protected virtual IQueryable<T> ApplySpecification(ISpecification<T> specification, bool evaluateCriteriaOnly = false)
