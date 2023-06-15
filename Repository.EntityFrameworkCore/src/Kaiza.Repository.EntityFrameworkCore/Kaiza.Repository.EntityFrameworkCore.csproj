@@ -4,6 +4,19 @@
 		<TargetFramework>net7.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
+		<PackageId>Kaiza.Repository.EntityFrameworkCore</PackageId>
+		<Title>Kaiza.Repository.EntityFrameworkCore</Title>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<Authors>Gordon Craig (@gcraig-kaiza)</Authors>
+		<Company>Kaiza</Company>
+		<PackageProjectUrl>https://github.com/kaizahq/Kaiza.Repository</PackageProjectUrl>
+		<Description>EF Core package to Kaiza.Repository containing an abstract repository and specification evaluators.</Description>
+		<RepositoryUrl>https://github.com/kaizahq/Kaiza.Repository</RepositoryUrl>
+		<PackageTags>specification;repository</PackageTags>
+		<Version>7.0.0</Version>
+		<AssemblyName>Kaiza.Repository</AssemblyName>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -12,7 +25,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\..\Repository\src\Kaiza.Repository\Kaiza.Repository.csproj" />
+	  <ProjectReference Include="..\..\..\Repository\src\Kaiza.Repository\Kaiza.Repository.csproj" />
 	</ItemGroup>
 
 </Project>

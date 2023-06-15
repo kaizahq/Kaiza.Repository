@@ -1,6 +1,7 @@
 ﻿namespace Kaiza.Repository;
 
-public interface IRepository<T, TId> : IReadRepository<T, TId> where T : class
+public interface IRepository<T> : IReadRepository<T>
+    where T : class
 {
     Task Add(T entity, bool saveChanges = false, CancellationToken ct = default);
     Task Update(T entity, bool saveChanges = false, CancellationToken ct = default);
