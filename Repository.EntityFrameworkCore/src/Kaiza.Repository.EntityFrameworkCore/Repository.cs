@@ -21,7 +21,7 @@ public abstract class Repository<T> : IRepository<T>
         _specificationEvaluator = specificationEvaluator;
     }
 
-    public virtual async Task<T?> GetById<TId>(TId id, CancellationToken ct = default)
+    public virtual async Task<T?> Get<TId>(TId id, CancellationToken ct = default)
         where TId : notnull
     {
         return await _dbSet.FindAsync(new object?[] { id }, cancellationToken: ct);

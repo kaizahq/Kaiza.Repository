@@ -3,7 +3,7 @@
 public interface IReadRepository<T>
     where T : class
 {
-    Task<T?> GetById<TId>(TId id, CancellationToken ct = default)
+    Task<T?> Get<TId>(TId id, CancellationToken ct = default)
         where TId : notnull;
     Task<T?> FirstOrDefault(ISpecification<T> specification, CancellationToken ct = default);
     Task<T?> SingleOrDefault(ISpecification<T> specification, CancellationToken ct = default);
